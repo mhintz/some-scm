@@ -1,55 +1,53 @@
 #lang racket
 
-(use
-  cairo
-  miscmacros
-  random-bsd
-  srfi-1
-  srfi-4
-  srfi-13
-  lolevel
-)
+(require racket/draw)
+(require racket/math)
+(require "./math.rkt")
 
-(load "math.scm")
-
+(define *filename* "out.svg")
 (define *rotation* 2)
-(define *delta* 5.8)
+(define *delta* 2.7)
 (define *width* 18)
 (define *height* 26)
 (define *box-size* 15)
 
-(define s (cairo-svg-surface-create "test.svg" 842 1190))
-(define c (cairo-create s))
+(define (println arg)
+  (display arg)
+  (newline))
+
+(define cx (new svg-dc% [width 842] [height 1190] [output *filename*] [exists 'replace]))
+
+(define pen-main (new pen% [color (make-color 0 0 0)] [width 1] [style 'solid]))
+(define brush-main (make-brush #:style 'transparent))
 
 (define (setup)
-  (cairo-scale c (/ 72 25.4) (/ 72 25.4)))
+  (send cx start-doc "")
+  (send cx start-page)
+  (send cx scale (/ 72 25.4) (/ 72 25.4))
+  (send cx set-pen pen-main)
+  (send cx set-brush brush-main))
 
 (define (draw-main)
-  (dotimes (y *height*)
-    (dotimes (x *width*)
-      (cairo-save c)
-      (cairo-set-line-width c 0.3)
-      (cairo-translate c (+ 12 (* x *box-size*)) (+ 16 (* y *box-size*)))
-      (cairo-rotate c (* (if (> 1 (random-integer 2)) -1 1)
-                         (/ cairo-pi 180)
-                         (* *rotation* (random-real))))
-      (cairo-rectangle c 0 0 *box-size* *box-size*)
-      (cairo-set-source-rgba c 0 0 0 1)
-      (cairo-stroke c)
-      (cairo-restore c)
-    )
-    (set! *rotation* (+ *rotation* *delta*))
-  ))
+  (for ([y (in-range 0 *height*)])
+    (for ([x (in-range 0 *width*)])
+      (let ([tx (send cx get-transformation)])
+        (send cx translate (+ 12 (* x *box-size*)) (+ 16 (* y *box-size*)))
+        (send cx rotate (* (if (> 0 (random 2)) -1 1)
+                           (/ pi 180)
+                           (* *rotation* (random))))
+        (send cx draw-rectangle 0 0 *box-size* *box-size*)
+        (send cx set-transformation tx)))
+  (set! *rotation* (+ *rotation* *delta*))))
 
 (define (teardown)
-  (cairo-surface-show-page s)
-  (cairo-destroy c)
-  (cairo-surface-finish s)
-  (cairo-surface-destroy s))
+  (send cx end-page)
+  (send cx end-doc))
 
-(define (main args)
-  (setup)
-  (draw-main)
-  (teardown)
-)
+(setup)
+(draw-main)
+(teardown)
+#| (define (main args) |#
+#|   (setup) |#
+#|   (draw-main) |#
+#|   (teardown)) |#
 

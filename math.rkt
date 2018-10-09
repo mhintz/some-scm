@@ -1,3 +1,5 @@
+#lang racket
+
 (define (pt x y)
   '(x y))
 
@@ -13,3 +15,9 @@
 (define (intersects polyA polyB)
   '())
 
+(provide
+  pt
+  px
+  py
+  segment-intersect
+  intersects)
