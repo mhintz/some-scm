@@ -42,11 +42,7 @@
   (send cx end-page)
   (send cx end-doc))
 
-(setup)
-(draw-main)
-(teardown)
-#| (define (main args) |#
-#|   (setup) |#
-#|   (draw-main) |#
-#|   (teardown)) |#
-
+(module+ main
+  (setup)
+  (draw-main)
+  (teardown))
