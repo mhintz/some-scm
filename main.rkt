@@ -16,8 +16,7 @@
   (newline))
 
 (define cx (new svg-dc% [width 842] [height 1190] [output *filename*] [exists 'replace]))
-
-(define pen-main (new pen% [color (make-color 0 0 0)] [width 1] [style 'solid]))
+(define pen-main (new pen% [color (make-color 0 0 0)] [width 0.5] [style 'solid]))
 (define brush-main (make-brush #:style 'transparent))
 
 (define (setup)
