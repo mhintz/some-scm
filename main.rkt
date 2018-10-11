@@ -26,6 +26,7 @@
   (send cx set-pen pen-main)
   (send cx set-brush brush-main))
 
+; based on the example from http://wiki.call-cc.org/eggref/4/cairo#examples
 (define (draw-main)
   (for ([y (in-range 0 *height*)])
     (for ([x (in-range 0 *width*)])
