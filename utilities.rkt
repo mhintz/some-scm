@@ -18,7 +18,12 @@
      (car lst)
      (cdr lst)))
 
+(define (println arg)
+  (display arg)
+  (newline))
+
 (provide
   >partial
   partial<
-  all)
+  all
+  println)
