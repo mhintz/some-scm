@@ -9,7 +9,11 @@
 (define (is-between? val a b)
   (and (<= a val) (<= val b)))
 
+(define (rand-in a b)
+  (+ a (* (random) (- b a))))
+
 (provide
   2pi
   !=
-  is-between?)
+  is-between?
+  rand-in)

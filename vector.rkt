@@ -5,41 +5,41 @@
 ;;;; 2d vector ;;;;
 
 (define (vec x y)
-  (list x y))
+  (cons x y))
 
 (define (vx v)
   (car v))
 
 (define (vy v)
-  (cadr v))
+  (cdr v))
 
 (define (vec? v)
-  (and (list? v) (all (map number? v))))
+  (and (pair? v) (number? (vx v)) (number? (vy v))))
 
 ; vector addition
 (define (vec+ v1 v2)
-  (map + v1 v2))
+  (map-pairs + v1 v2))
 
 ; vector subtraction
 (define (vec- v1 v2)
-  (map - v1 v2))
+  (map-pairs - v1 v2))
 
 ; vector-scalar multiplication
 (define (vec* v s)
-  (map (lambda (x) (* x s)) v))
+  (map-pair (lambda (x) (* x s)) v))
 
 ; vector-scalar division
 (define (vec/ v s)
-  (map (lambda (x) (/ x s)) v))
+  (map-pair (lambda (x) (/ x s)) v))
 
 ; vector length
-(define (vec-len vec)
-  (sqrt (apply + (map (lambda (v) (expt v 2)) vec))))
+(define (vec-len v)
+  (sqrt (+ (expt (vx v) 2) (expt (vy v) 2))))
 
 ; normalize a vector
-(define (vec-normalize vec)
-  (let ([len (vec-len vec)])
-    (vec/ vec len)))
+(define (vec-normalize v)
+  (let ([len (vec-len v)])
+    (vec/ v len)))
 
 ; distance between vecs
 (define (vec-distance v1 v2)
@@ -47,7 +47,8 @@
 
 ; vector dot product
 (define (vec-dot v1 v2)
-  (apply + (map * v1 v2)))
+  (let ([mult (map-pairs * v1 v2)])
+    (+ (car mult) (cdr mult))))
 
 ; vector cross product (1d)
 (define (vec-cross v1 v2)
@@ -55,7 +56,7 @@
 
 ; perpendicular vector
 (define (vec-perp v)
-  (list (- 0 (vy v)) (vx v)))
+  (vec (- 0 (vy v)) (vx v)))
 
 (provide
   vec

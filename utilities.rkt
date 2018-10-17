@@ -18,12 +18,20 @@
      (car lst)
      (cdr lst)))
 
-(define (println arg)
-  (display arg)
+(define (map-pair fn p1)
+  (cons (fn (car p1)) (fn (cdr p1))))
+
+(define (map-pairs fn p1 p2)
+  (cons (fn (car p1) (car p2)) (fn (cdr p1) (cdr p2))))
+
+(define (println . args)
+  (map display args)
   (newline))
 
 (provide
   >partial
   partial<
   all
+  map-pair
+  map-pairs
   println)

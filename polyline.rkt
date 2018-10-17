@@ -1,5 +1,6 @@
 #lang racket
 
+(require "./utilities.rkt")
 (require "./math.rkt")
 (require "./vector.rkt")
 
@@ -13,6 +14,9 @@
 
 (define (seg-end seg)
   (cadr seg))
+
+(define (segment? seg)
+  (and (= 2 (length seg)) (all (map vec? seg))))
 
 ; segment-to-vector
 (define (segment->vec seg)
