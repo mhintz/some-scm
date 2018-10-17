@@ -24,6 +24,14 @@
 (define (vec- v1 v2)
   (map-pairs - v1 v2))
 
+; vector scalar addition
+(define (vec-scalar+ v x y)
+  (vec (+ (vx v) x) (+ (vy v) y)))
+
+; vector scalar subtraction
+(define (vec-scalar- v x y)
+  (vec (- (vx v) x) (- (vy v) y)))
+
 ; vector-scalar multiplication
 (define (vec* v s)
   (map-pair (lambda (x) (* x s)) v))
@@ -65,6 +73,8 @@
   vec?
   vec+
   vec-
+  vec-scalar+
+  vec-scalar-
   vec*
   vec/
   vec-len

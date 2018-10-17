@@ -29,23 +29,23 @@
 (define *width-mm* (/ *width-pt* *scale-x*))
 (define *height-mm* (/ *height-pt* *scale-y*))
 
-(define cx (new svg-dc% [width *width-pt*] [height *height-pt*] [output *filename*] [exists 'replace]))
+(define ctx (new svg-dc% [width *width-pt*] [height *height-pt*] [output *filename*] [exists 'replace]))
 (define pen-main (new pen% [color (make-color 0 0 0)] [width 0.5] [style 'solid]))
 (define brush-main (make-brush #:style 'transparent))
 
 (define (setup)
-  (send cx start-doc "starting doc")
-  (send cx start-page)
-  (send cx scale *scale-x* *scale-y*) ; this scales everything into millimeters
-  (send cx set-smoothing 'smoothed)
-  (send cx set-pen pen-main)
-  (send cx set-brush brush-main))
+  (send ctx start-doc "starting doc")
+  (send ctx start-page)
+  (send ctx scale *scale-x* *scale-y*) ; this scales everything into millimeters
+  (send ctx set-smoothing 'smoothed)
+  (send ctx set-pen pen-main)
+  (send ctx set-brush brush-main))
 
 (define (teardown)
-  (send cx end-page)
-  (send cx end-doc))
+  (send ctx end-page)
+  (send ctx end-doc))
 
 (module+ main
   (setup)
-  (draw-drawing cx *width-mm* *height-mm*)
+  (draw-drawing ctx *width-mm* *height-mm*)
   (teardown))

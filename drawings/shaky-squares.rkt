@@ -11,16 +11,16 @@
 (define *box-size* 15)
 
 ; based on the example from http://wiki.call-cc.org/eggref/4/cairo#examples
-(define (draw-drawing cx width height)
+(define (draw-drawing ctx width height)
   (for ([y (in-range 0 *num-squares-y*)])
     (for ([x (in-range 0 *num-squares-x*)])
-      (let ([tx (send cx get-transformation)])
-        (send cx translate (+ 12 (* x *box-size*)) (+ 16 (* y *box-size*)))
-        (send cx rotate (* (if (> 0 (random 2)) -1 1)
+      (let ([tx (send ctx get-transformation)])
+        (send ctx translate (+ 12 (* x *box-size*)) (+ 16 (* y *box-size*)))
+        (send ctx rotate (* (if (> 0 (random 2)) -1 1)
                            (/ pi 180)
                            (* *rotation* (random))))
-        (send cx draw-rectangle 0 0 *box-size* *box-size*)
-        (send cx set-transformation tx)))
+        (send ctx draw-rectangle 0 0 *box-size* *box-size*)
+        (send ctx set-transformation tx)))
   (set! *rotation* (+ *rotation* *delta*))))
 
 (provide

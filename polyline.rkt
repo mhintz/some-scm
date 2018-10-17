@@ -62,10 +62,17 @@
 ; (segment-intersect (segment (vec 0 0) (vec 1 1)) (segment (vec 0.5 0.5) (vec 0 1)))
 ; (segment-intersect (segment (vec 0 0) (vec 1 1)) (segment (vec 0.5 0.5) (vec 1.5 1.5))
 
+;;;; polyline ;;;;
+
+; a polyline is just a list of vectors
+(define (polyline . args)
+  args)
+
 (provide 
   segment
   seg-start
   seg-end
   segment->vec
-  segment-intersect)
+  segment-intersect
+  polyline)
 

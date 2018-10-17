@@ -29,12 +29,12 @@
                  (lambda (other)
                    (and
                      (not (circle-eq? circ other))
-                     (circle-intersect? (circle-expand circ 2) other))) lst))
+                     (circle-circle-intersect? (circle-expand circ 2) other))) lst))
             (recur (- count 1) (cons circ lst))
             (recur (- count 1) lst))]))))
 
-(define (draw-drawing cx width height)
-    (for-each (lambda (c) (draw-circle cx c)) (gen-circles 30000 width height)))
+(define (draw-drawing ctx width height)
+    (for-each (lambda (c) (draw-circle ctx c)) (gen-circles 30000 width height)))
 
 (provide
   *drawing-name*
