@@ -68,11 +68,15 @@
 (define (polyline . args)
   args)
 
+(define (polyline-add poly vert)
+  (append poly (list vert)))
+
 (provide 
   segment
   seg-start
   seg-end
   segment->vec
   segment-intersect
-  polyline)
+  polyline
+  polyline-add)
 

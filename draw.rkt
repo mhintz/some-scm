@@ -6,7 +6,7 @@
 (require "./vector.rkt")
 (require "./polyline.rkt")
 (require "./circle.rkt")
-(require "./rectangle.rkt")
+(require "./pgram.rkt")
 
 (define seg-base-length 0.1)
 
@@ -25,11 +25,9 @@
          [poly (map pt (range circle-segments))])
     (draw-polyline ctx poly)))
 
-(define (draw-rectangle ctx rect)
-  (let* ([minpt (rmin rect)]
-         [maxpt (rmax rect)]
-         [poly (polyline minpt (vec (vx minpt) (vy maxpt)) maxpt (vec (vx maxpt) (vy minpt)) minpt)])
-    (draw-polyline ctx poly)))
+(define (draw-pgram ctx plg)
+  (let* ([verts (pgram-vertices plg)])
+    (draw-polyline ctx (polyline-add plg (car plg)))))
 
 (provide
   draw-segment
