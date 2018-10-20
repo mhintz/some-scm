@@ -16,5 +16,9 @@
 ; tests for pgram-vec-intersect?
 (define test-p (pgram (vec 0 0) (vec 2 0) (vec 0 2)))
 (assert (pgram-vec-intersect? test-p (vec 1 1)))
-#| (assert (pgram-vec-intersect? test-p (vec 2 2))) |#
+(assert (pgram-vec-intersect? test-p (vec 2 2)))
 (assert (pgram-vec-intersect? test-p (vec 1.5 1.5)))
+(assert (pgram-vec-intersect? test-p (vec 0 0)))
+
+(define test-other (pgram (vec 1 1) (vec 2 0) (vec 0 2)))
+(assert (pgram-intersect? test-p test-other))

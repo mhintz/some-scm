@@ -2,6 +2,7 @@
 
 (require "math.rkt")
 (require "vector.rkt")
+(require "polyline.rkt")
 (require "utilities.rkt")
 
 ;;;; parallelogram ;;;;
@@ -44,6 +45,14 @@
 (define (pgram-vertices plg)
   (list (pgram-v1 plg) (pgram-v2 plg) (pgram-v3 plg) (pgram-v4 plg)))
 
+; segments of the parallelogram
+(define (pgram-segments plg)
+  (let ([p1 (pgram-v1 plg)]
+        [p2 (pgram-v2 plg)]
+        [p3 (pgram-v3 plg)]
+        [p4 (pgram-v4 plg)])
+  (list (segment p1 p2) (segment p2 p3) (segment p3 p4) (segment p4 p1))))
+
 ; construct an axis-aligned parallelogram (ok, it's a rectangle) from a center point, a width, and a height
 (define (pgram-from-center center width height)
   (pgram (vec-scalar- center (/ width 2) (/ height 2)) (vec 0 height) (vec width 0)))
@@ -64,6 +73,18 @@
         [l (/ bXp (- aXb))])
     (and (is-between? h 0 1) (is-between? l 0 1))))
 
+; test if two parallelograms intersect, using up 8 point-parallelogram intersection tests and 16 segment-segment tests between their edges
+(define (pgram-intersect? p1 p2)
+  (let ([p1-verts (pgram-vertices p1)]
+        [p2-verts (pgram-vertices p2)]
+        [map-against-other (lambda (seg other-segs)
+                             (ormap (lambda (other-seg) (segment-intersect? other-seg seg)) other-segs))])
+    (or (ormap (lambda (p) (pgram-vec-intersect? p1 p)) p2-verts)
+        (ormap (lambda (p) (pgram-vec-intersect? p2 p)) p1-verts)
+        (let ([p1-segs (pgram-segments p1)]
+              [p2-segs (pgram-segments p2)])
+              (ormap (lambda (seg1) (map-against-other seg1 p2-segs)) p1-segs)))))
+
 (provide
   pgram
   apex
@@ -78,4 +99,5 @@
   pgram-vertices
   pgram-from-center
   pgram-from-pos
-  pgram-vec-intersect?)
+  pgram-vec-intersect?
+  pgram-intersect?)
