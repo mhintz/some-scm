@@ -11,14 +11,15 @@
 (require "./draw.rkt")
 
 ; (require "./drawings/shaky-squares.rkt")
-(require "./drawings/funky-circles.rkt")
+; (require "./drawings/funky-circles.rkt")
+(require "drawings/funky-rects.rkt")
 
 (define *filename* (string-append "out/" *drawing-name* ".svg"))
 
-; A3 settings -  width / height in points
+; A3 settings -  width / height in points (297 x 420 mm)
 (define *width-pt* 842)
 (define *height-pt* 1190)
-; US Ledger settings (11" x 17") - width / height in points
+; US Ledger settings (11" x 17") - width / height in points (279.4 x 431.8 mm)
 ; (define *width-pt* 792)
 ; (define *height-pt* 1224)
 

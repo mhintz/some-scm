@@ -1,6 +1,8 @@
 #lang racket
 
+(require "math.rkt")
 (require "vector.rkt")
+(require "utilities.rkt")
 
 ;;;; parallelogram ;;;;
 
@@ -9,15 +11,26 @@
 (define (pgram pt side1 side2)
   (cons pt (cons side1 side2)))
 
+(define (apex plg)
+  (car plg))
+
 (define (side-1 plg)
   (car (cdr plg)))
 
 (define (side-2 plg)
   (cdr (cdr plg)))
 
+; "center" diagonal, i.e. the diagonal from the apex point to the opposite point
+(define (pgram-center-diagonal plg)
+  (vec+ (side-1 plg) (side-2 plg)))
+
+; "off" diagonal, i.e. the diagonal between the endpoints of the two side vectors
+(define (pgram-off-diagonal plg)
+  (vec- (side-1 plg) (side-2 plg)))
+
 ; vertices in clockwise order
 (define (pgram-v1 plg)
-  (car plg))
+  (apex plg))
 
 (define (pgram-v2 plg)
   (vec+ (pgram-v1 plg) (side-1 plg)))
@@ -39,14 +52,30 @@
 (define (pgram-from-pos top-left width height)
   (pgram top-left (vec 0 height) (vec width 0)))
 
+; test if a point lies inside the parallelogram
+(define (pgram-vec-intersect? plg v)
+  (let* ([p (vec- v (apex plg))]
+        [a (side-1 plg)]
+        [b (side-2 plg)]
+        [aXp (vec-cross a p)]
+        [bXp (vec-cross b p)]
+        [aXb (vec-cross a b)]
+        [h (/ aXp aXb)]
+        [l (/ bXp (- aXb))])
+    (and (is-between? h 0 1) (is-between? l 0 1))))
+
 (provide
   pgram
+  apex
   side-1
   side-2
+  pgram-center-diagonal
+  pgram-off-diagonal
   pgram-v1
   pgram-v2
   pgram-v3
   pgram-v4
   pgram-vertices
   pgram-from-center
-  pgram-from-pos)
+  pgram-from-pos
+  pgram-vec-intersect?)

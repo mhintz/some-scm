@@ -24,7 +24,7 @@
 
 ; determine if two line segments intersect with each other 
 ; based on https://stackoverflow.com/a/565282 
-(define (segment-intersect segA segB)
+(define (segment-intersect? segA segB)
   (let* ([p (seg-start segA)]
         [q (seg-start segB)]
         [r (segment->vec segA)]
@@ -55,20 +55,13 @@
       ; not parallel, not intersecting
       #f)))))
 
-; TODO: test cases for the above
-; (segment-intersect (segment (vec 0 0) (vec 1 1)) (segment (vec 0.5 0.5) (vec 1.5 1.5))
-; (segment-intersect (segment (vec 0 0) (vec 1 1)) (segment (vec 0.5 0.5) (vec 1.5 1.5)) 
-; (segment-intersect (segment (vec 0 0) (vec 1 1)) (segment (vec 1 0) (vec 0 1)))
-; (segment-intersect (segment (vec 0 0) (vec 1 1)) (segment (vec 0.5 0.5) (vec 0 1)))
-; (segment-intersect (segment (vec 0 0) (vec 1 1)) (segment (vec 0.5 0.5) (vec 1.5 1.5))
-
 ;;;; polyline ;;;;
 
 ; a polyline is just a list of vectors
 (define (polyline . args)
   args)
 
-(define (polyline-add poly vert)
+(define (polyline-push poly vert)
   (append poly (list vert)))
 
 (provide 
@@ -76,7 +69,7 @@
   seg-start
   seg-end
   segment->vec
-  segment-intersect
+  segment-intersect?
   polyline
-  polyline-add)
+  polyline-push)
 
