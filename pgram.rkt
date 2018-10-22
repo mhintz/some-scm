@@ -12,6 +12,9 @@
 (define (pgram pt side1 side2)
   (cons pt (cons side1 side2)))
 
+(define (pgram-eq? p1 p2)
+  (and (vec-eq? (apex p1) (apex p2)) (vec-eq? (side-1 p1) (side-1 p2)) (vec-eq? (side-2 p1) (side-2 p2))))
+
 (define (apex plg)
   (car plg))
 
@@ -87,6 +90,7 @@
 
 (provide
   pgram
+  pgram-eq?
   apex
   side-1
   side-2

@@ -17,6 +17,9 @@
 (define (vec? v)
   (and (pair? v) (number? (vx v)) (number? (vy v))))
 
+(define (vec-eq? v1 v2)
+  (and (= (vx v1) (vx v2)) (= (vy v1) (vy v2))))
+
 ; vector addition
 (define (vec+ v1 v2)
   (map-pairs + v1 v2))
@@ -107,6 +110,7 @@
   vx
   vy
   vec?
+  vec-eq?
   vec+
   vec-
   vec-scalar+
