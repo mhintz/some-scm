@@ -6,8 +6,8 @@
 (require "../vector.rkt")
 (require "../polyline.rkt")
 (require "../circle.rkt")
-(require "../draw.rkt")
 (require "../intersection.rkt")
+(require "../draw.rkt")
 
 (define *drawing-name* "funky-circles")
 
