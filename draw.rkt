@@ -2,11 +2,11 @@
 
 (require racket/draw)
 
-(require "./math.rkt")
-(require "./vector.rkt")
-(require "./polyline.rkt")
-(require "./circle.rkt")
-(require "./pgram.rkt")
+(require "util.rkt")
+(require "vector.rkt")
+(require "polyline.rkt")
+(require "circle.rkt")
+(require "pgram.rkt")
 
 ; units assumed to be in millimeters
 (define seg-base-length 0.1)

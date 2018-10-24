@@ -12,8 +12,10 @@
 (define (rand-in a b)
   (+ a (* (random) (- b a))))
 
-(provide
-  2pi
-  !=
-  is-between?
-  rand-in)
+;;;; Various functional utilities ;;;;
+
+(define (println . args)
+  (map display args)
+  (newline))
+
+(provide (all-defined-out))

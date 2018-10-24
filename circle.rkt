@@ -34,16 +34,4 @@
   (vec (+ (cx circ) (* (cr circ) (cos ang)))
        (+ (cy circ) (* (cr circ) (sin ang)))))
 
-; test if two circles intersect
-(define (circle-circle-intersect? c1 c2)
-  (<= (vec-distance (cc c1) (cc c2)) (+ (cr c1) (cr c2))))
-
-(provide
-  circle
-  cx
-  cy
-  cr
-  circle-expand
-  circle-eq?
-  circle-pos
-  circle-circle-intersect?)
+(provide (all-defined-out))

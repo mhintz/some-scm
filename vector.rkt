@@ -1,7 +1,6 @@
 #lang racket
 
-(require "utilities.rkt")
-(require "math.rkt")
+(require "util.rkt")
 
 ;;;; 2d vector ;;;;
 
@@ -22,11 +21,11 @@
 
 ; vector addition
 (define (vec+ v1 v2)
-  (map-pairs + v1 v2))
+  (vec (+ (vx v1) (vx v2)) (+ (vy v1) (vy v2))))
 
 ; vector subtraction
 (define (vec- v1 v2)
-  (map-pairs - v1 v2))
+  (vec (- (vx v1) (vx v2)) (- (vy v1) (vy v2))))
 
 ; piecewise vector scalar addition
 (define (vec-scalar+ v x y)
@@ -38,11 +37,11 @@
 
 ; vector-scalar multiplication
 (define (vec* v s)
-  (map-pair (lambda (x) (* x s)) v))
+  (vec (* (vx v) s) (* (vy v) s)))
 
 ; vector-scalar division
 (define (vec/ v s)
-  (map-pair (lambda (x) (/ x s)) v))
+  (vec (/ (vx v) s) (/ (vy v) s)))
 
 ; squared vector length
 (define (vec-len-sq v)
@@ -63,8 +62,7 @@
 
 ; vector dot product
 (define (vec-dot v1 v2)
-  (let ([mult (map-pairs * v1 v2)])
-    (+ (car mult) (cdr mult))))
+  (+ (* (vx v1) (vx v2)) (* (vy v1) (* (vy v2)))))
 
 ; vector cross product (1d)
 (define (vec-cross v1 v2)
@@ -105,28 +103,4 @@
 (define (vec-with-len v len)
   (vec* (vec-normalize v) len))
 
-(provide
-  vec
-  vx
-  vy
-  vec?
-  vec-eq?
-  vec+
-  vec-
-  vec-scalar+
-  vec-scalar-
-  vec*
-  vec/
-  vec-len-sq
-  vec-len
-  vec-normalize
-  vec-distance
-  vec-dot
-  vec-cross
-  vec-perp
-  vec-rotate
-  tri-signed-area
-  rand-unit-vec
-  rand-vec
-  rand-point
-  vec-with-len)
+(provide (all-defined-out))

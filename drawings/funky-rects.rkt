@@ -1,12 +1,12 @@
 #lang racket
 
-(require "../utilities.rkt")
-(require "../math.rkt")
+(require "../util.rkt")
 (require "../vector.rkt")
 (require "../polyline.rkt")
 (require "../circle.rkt")
 (require "../draw.rkt")
 (require "../pgram.rkt")
+(require "../intersection.rkt")
 
 (define *drawing-name* "funky-rects")
 

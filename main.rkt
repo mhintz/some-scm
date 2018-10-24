@@ -3,15 +3,14 @@
 (require racket/draw)
 (require racket/math)
 
-(require "./utilities.rkt")
-(require "./math.rkt")
-(require "./vector.rkt")
-(require "./polyline.rkt")
-(require "./circle.rkt")
-(require "./draw.rkt")
+(require "util.rkt")
+(require "vector.rkt")
+(require "polyline.rkt")
+(require "circle.rkt")
+(require "draw.rkt")
 
-; (require "./drawings/shaky-squares.rkt")
-; (require "./drawings/funky-circles.rkt")
+#| (require "./drawings/shaky-squares.rkt") |#
+#| (require "./drawings/funky-circles.rkt") |#
 (require "drawings/funky-rects.rkt")
 
 (define *filename* (string-append "out/" *drawing-name* ".svg"))

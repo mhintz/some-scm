@@ -2,12 +2,12 @@
 
 (require racket/draw)
 
-(require "../utilities.rkt")
-(require "../math.rkt")
+(require "../util.rkt")
 (require "../vector.rkt")
 (require "../polyline.rkt")
 (require "../circle.rkt")
 (require "../draw.rkt")
+(require "../intersection.rkt")
 
 (define *drawing-name* "funky-circles")
 
