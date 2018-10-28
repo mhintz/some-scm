@@ -29,7 +29,7 @@
                  (lambda (other)
                    (and
                      (not (circle-eq? circ other))
-                     (circle-circle-intersect? (circle-expand circ 2) other))) lst))
+                     (circle-intersect? (circle-expand circ 2) other))) lst))
             (recur (- count 1) (cons circ lst))
             (recur (- count 1) lst))]))))
 

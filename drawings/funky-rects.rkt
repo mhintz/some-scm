@@ -16,12 +16,12 @@
          [side2 (vec-rotate side1 (rand-in (* pi 0.3) (- pi (* pi 0.3))))])
     (pgram (vec x y) side1 (vec-with-len side2 s2))))
 
-(define (gen-points cnt width height)
+(define (gen-points cnt plg width height)
   (let ([coll empty])
     (for ([idx (in-range cnt)])
       (let ([pt (rand-point width height)])
-        (set! coll (cons pt coll))
-        #| (when (pgram-vec-intersect? plg pt)) |#
+        (when (pgram-vec-intersect? plg pt)
+          (set! coll (cons pt coll)))
         ))
     coll))
 
@@ -29,20 +29,16 @@
   (let recur ([n cnt] [lst empty])
     (cond
       [(= n 0) lst]
-      [else (let ([plg (rand-pgram (rand-in 0 width) (rand-in 0 height) (rand-in 5 10) (rand-in 5 10))])
-        (if (not (ormap (lambda (p) (and (not (pgram-eq? plg p)) (pgram-intersect? plg p))) lst))
+      [else (let ([plg (rand-pgram (rand-in 0 width) (rand-in 0 height) (rand-in 5 50) (rand-in 5 50))])
+        (if (not (ormap (lambda (p) (and (not (pgram-eq? plg p)) (pgram-intersect-edge? plg p))) lst))
           (recur (- n 1) (cons plg lst))
           (recur (- n 1) lst)))])))
 
-#| (define (draw-drawing ctx width height) |#
-#|   (let* ([plgs (map (lambda (idx) (rand-pgram (rand-in 0 width) (rand-in 0 height) (rand-in 5 10) (rand-in 5 10))) (range 500))] |#
-#|          [points (gen-points 1000 width height)]) |#
-#|     (for-each (lambda (plg) (draw-pgram ctx plg)) plgs) |#
-#|     (for-each (lambda (pt) (draw-point ctx pt)) points))) |#
-
 (define (draw-drawing ctx width height)
-  (let ([plgs (gen-pgrams 1000 width height)])
-    (for-each (lambda (p) (draw-pgram ctx p)) plgs)))
+  (let* ([plgs (gen-pgrams 30 width height)]
+         [points (apply append (map (lambda (plg) (gen-points 10000 plg width height)) plgs))])
+    (for-each (lambda (plg) (draw-pgram ctx plg)) plgs)
+    (for-each (lambda (pt) (draw-point ctx pt)) points)))
 
 (provide
   *drawing-name*

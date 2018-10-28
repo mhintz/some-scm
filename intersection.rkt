@@ -40,7 +40,7 @@
       #f)))))
 
 ; test if two circles intersect
-(define (circle-circle-intersect? c1 c2)
+(define (circle-intersect? c1 c2)
   (<= (vec-distance (cc c1) (cc c2)) (+ (cr c1) (cr c2))))
 
 ; test if a point lies inside the parallelogram
@@ -67,5 +67,10 @@
               [p2-segs (pgram-segments p2)])
               (ormap (lambda (seg1) (map-against-other seg1 p2-segs)) p1-segs)))))
 
+; define if two pgrams intersect, but only at the edges - i.e. if they intersect, but neither is completely within the other
+(define (pgram-intersect-edge? p1 p2)
+  (and (not (or (andmap identity (map (lambda (v) (pgram-vec-intersect? p1 v)) (pgram-vertices p2)))
+                (andmap identity (map (lambda (v) (pgram-vec-intersect? p2 v)) (pgram-vertices p1)))))
+       (pgram-intersect? p1 p2)))
 
 (provide (all-defined-out))
